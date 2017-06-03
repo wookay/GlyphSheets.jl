@@ -5,7 +5,7 @@ import GlyphSheets.DSL: Move, Line, Cubic, Conic
 library = create_library()
 typeface = create_typeface(library, "Butler_Regular.otf")
 
-glyph = create_glyph(typeface, 'B', 10pt)
+glyph = create_glyph(typeface, 'B', 5pt)
 outlines = outline_decompose(glyph)
 
 close_typeface(typeface)
@@ -15,16 +15,16 @@ close_library(library)
 using Cairo
 using ColorTypes
 
-c = CairoRGBSurface(600, 800)
+c = CairoRGBSurface(300, 300)
 cr = CairoContext(c)
 
 save(cr)
-set_source_rgb(cr,0.8,0.8,0.8)
-rectangle(cr,0,0,600,800)
+set_source_rgb(cr, 0.8, 0.8, 0.8)
+rectangle(cr, 0, 0, 300, 300)
 fill(cr)
 restore(cr)
 
-translate(cr, 0, 730)
+translate(cr, 0, 280)
 scale(cr, 1, -1)
 
 for op in outlines
@@ -47,4 +47,4 @@ fill_preserve(cr)
 set_source_rgba(cr, 0, 1, 0, 1)
 stroke(cr)
 
-write_to_png(c,"cairo.png")
+write_to_png(c, "cairo.png")

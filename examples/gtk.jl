@@ -5,7 +5,7 @@ import GlyphSheets.DSL: Move, Line, Cubic, Conic
 library = create_library()
 typeface = create_typeface(library, "Butler_Regular.otf")
 
-glyph = create_glyph(typeface, 'B', 10pt)
+glyph = create_glyph(typeface, 'B', 5pt)
 outlines = outline_decompose(glyph)
 
 close_typeface(typeface)
@@ -14,7 +14,7 @@ close_library(library)
 
 using Gtk, Gtk.ShortNames, Graphics, Cairo
 
-win = Window("Gtk", 600, 800)
+win = Window("Gtk", 300, 300)
 hbox = Box(:h)
 setproperty!(hbox, :homogeneous, true)
 push!(win, hbox)
@@ -23,7 +23,7 @@ push!(hbox, canv)
 
 @guarded draw(canv) do widget
     cr = getgc(canv)
-    translate(cr, 0, 730)
+    translate(cr, 0, 280)
     scale(cr, 1, -1)
     for op in outlines
         if op isa Move

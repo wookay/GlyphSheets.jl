@@ -95,13 +95,14 @@ Base.convert(::Type{Point}, px::Pixel) = Pixel(3/4 * px.val)
 function create_glyph(typeface::TypeFace, char::Char, unit::T) where T <: LengthUnit
     glyph_index = FT_Get_Char_Index(typeface.ref[], char)
     if isa(unit, RelativeUnit)
-        char_width = char_height = unit.val * 64
-        @ok FT_Set_Char_Size(typeface.ref[], char_width, char_height, 1, 1)
+        pixel_width = pixel_height = UInt32(unit.val)
+        @ok FT_Set_Pixel_Sizes(typeface.ref[], pixel_width, pixel_height)
     elseif isa(unit, AbsoluteUnit)
-        pixel_width = pixel_height = unit.val
-        @ok FT_Set_Pixel_Sizes(typeface.ref[], UInt32(pixel_width), UInt32(pixel_height))
+        char_width = char_height = 64unit.val
+        horz_resolution = vert_resolution = 72
+        @ok FT_Set_Char_Size(typeface.ref[], char_width, char_height, horz_resolution, vert_resolution)
     end
-    @ok FT_Load_Glyph(typeface.ref[], glyph_index, FT_LOAD_NO_SCALE | FT_LOAD_NO_BITMAP)
+    @ok FT_Load_Glyph(typeface.ref[], glyph_index, FT_LOAD_DEFAULT)
     face = unsafe_load(typeface.ref[])
     slot = unsafe_load(face.glyph)
     Glyph(slot, char, unit)
