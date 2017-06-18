@@ -13,6 +13,7 @@ close_library(library)
 
 
 using Cairo
+using Colors
 using ColorTypes
 
 c = CairoRGBSurface(300, 300)
@@ -24,10 +25,10 @@ rectangle(cr, 0, 0, 300, 300)
 fill(cr)
 restore(cr)
 
-translate(cr, 0, 280)
+translate(cr, 0, glyph.slot.metrics.height+20)
 scale(cr, 1, -1)
 
-for op in outlines
+function operate(cr, op)
     if op isa Move
         move_to(cr, op.to...)
     elseif op isa Line
@@ -39,12 +40,30 @@ for op in outlines
     end
 end
 
-close_path(cr)
-set_line_width(cr, 3)
+function fill_paths(cr, outlines)
+    save(cr)
+    operate.(cr, outlines)
+    set_source_rgba(cr, 0.9, 1, 0.9, 1)
+    fill(cr)
+    restore(cr)
+end
 
-set_source_rgba(cr, 1, 0.5, 0.5, 0.8)
-fill_preserve(cr)
-set_source_rgba(cr, 0, 1, 0, 1)
-stroke(cr)
+function stroke_paths(cr, outlines)
+    save(cr)
+    set_line_width(cr, 3)
+    colors = distinguishable_colors(length(outlines))
+    last_pos = (0, 0)
+    for (color, op) in zip(colors, outlines)
+        move_to(cr, last_pos...)
+        operate(cr, op)
+        set_source_rgba(cr, red(color), green(color), blue(color), alpha(color))
+        stroke(cr)
+        last_pos = op.to
+    end
+    restore(cr)
+end
+
+fill_paths(cr, outlines)
+stroke_paths(cr, outlines)
 
 write_to_png(c, "cairo.png")

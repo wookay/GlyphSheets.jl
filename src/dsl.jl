@@ -78,6 +78,7 @@ struct Pixel <: RelativeUnit
 end
 
 struct Glyph
+    face::FreeType.FT_FaceRec
     slot::FreeType.FT_GlyphSlotRec
     char::Char
     unit::LengthUnit
@@ -105,7 +106,7 @@ function create_glyph(typeface::TypeFace, char::Char, unit::T) where T <: Length
     @ok FT_Load_Glyph(typeface.ref[], glyph_index, FT_LOAD_DEFAULT)
     face = unsafe_load(typeface.ref[])
     slot = unsafe_load(face.glyph)
-    Glyph(slot, char, unit)
+    Glyph(face, slot, char, unit)
 end
 
 function outline_decompose(glyph::Glyph)
