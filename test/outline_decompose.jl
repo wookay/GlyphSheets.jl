@@ -7,7 +7,8 @@ typeface = create_typeface(library, "Butler_Regular.otf")
 glyph = create_glyph(typeface, 'A', 12pt)
 outlines = outline_decompose(glyph)
 
-@test Any[GlyphSheets.DSL.Move((175, 226)), GlyphSheets.DSL.Line((296, 558)), GlyphSheets.DSL.Line((427, 226)), GlyphSheets.DSL.Line((175, 226)), GlyphSheets.DSL.Move((673, 13)), GlyphSheets.DSL.Cubic((645, 15), (624, 14), (591, 94)), GlyphSheets.DSL.Cubic((591, 94), (467, 410), (345, 704)), GlyphSheets.DSL.Line((334, 704)), GlyphSheets.DSL.Line((167, 249)), GlyphSheets.DSL.Cubic((80, 18), (55, 14), (17, 13)), GlyphSheets.DSL.Line((17, 0)), GlyphSheets.DSL.Line((240, 0)), GlyphSheets.DSL.Line((240, 13)), GlyphSheets.DSL.Cubic((101, 9), (145, 133), (172, 213)), GlyphSheets.DSL.Line((431, 213)), GlyphSheets.DSL.Line((466, 126)), GlyphSheets.DSL.Cubic((489, 70), (499, 13), (445, 13)), GlyphSheets.DSL.Line((445, 0)), GlyphSheets.DSL.Line((673, 0)), GlyphSheets.DSL.Line((673, 13))] == outlines
+@test Any[GlyphSheets.DSL.Move((134, 173)), GlyphSheets.DSL.Line((227, 452)), GlyphSheets.DSL.Line((327, 173)), GlyphSheets.DSL.Line((134, 173)), GlyphSheets.DSL.Move((516, 9)), GlyphSheets.DSL.Cubic((495, 11), (478, 10), (453, 72)), GlyphSheets.DSL.Cubic((453, 72), (358, 328), (264, 576)), GlyphSheets.DSL.Line((256, 576)), GlyphSheets.DSL.Line((128, 192)), GlyphSheets.DSL.Cubic((61, 42), (42, 39), (13, 38)), GlyphSheets.DSL.Line((13, 28)), GlyphSheets.DSL.Line((184, 28)), GlyphSheets.DSL.Line((184, 38)), GlyphSheets.DSL.Cubic((77, 6), (111, 102), (132, 163)), GlyphSheets.DSL.Line((330, 163)), GlyphSheets.DSL.Line((357, 96)), GlyphSheets.DSL.Cubic((375, 53), (383, 9), (341, 9)), GlyphSheets.DSL.Line((341, 0)), GlyphSheets.DSL.Line((516, 0)), GlyphSheets.DSL.Line((516, 9))] == outlines
+
 
 close_typeface(typeface)
 close_library(library)
