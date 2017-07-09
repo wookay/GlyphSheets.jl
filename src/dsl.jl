@@ -135,7 +135,7 @@ function outline_decompose(glyph::Glyph)
         Cint(0)
     end
 
-    global paths = Vector()
+    global paths = Vector{PathOperation}()
     user_f = cfunction(Void, (PathOperation,)) do op
         push!(paths, op)
         nothing
@@ -143,7 +143,7 @@ function outline_decompose(glyph::Glyph)
 
     outline_funcs = FreeType.FT_Outline_Funcs(move_f, line_f, conic_f, cubic_f, 0, 0)
     @ok FT_Outline_Decompose(glyph.slot.outline, outline_funcs, user_f)
-    paths
+    paths::Vector{PathOperation}
 end
 
 end
