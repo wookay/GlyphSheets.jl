@@ -11,11 +11,10 @@ export close_library, close_typeface
 export pt, px
 
 using FreeType
-#=
-function FT_Outline_Decompose(outline::FT_Outline,outline_funcs::FT_Outline_Funcs,user)
-    ccall((:FT_Outline_Decompose,freetype),FT_Error,(Ptr{FT_Outline},Ptr{FT_Outline_Funcs},Ptr{Void}),pointer_from_objref(outline),pointer_from_objref(outline_funcs),user)
+
+function FT_Outline_Decompose(outline::FreeType.FT_Outline,outline_funcs::FreeType.FT_Outline_Funcs,user)
+    ccall((:FT_Outline_Decompose,FreeType.freetype),FreeType.FT_Error,(Ptr{FreeType.FT_Outline},Ptr{FreeType.FT_Outline_Funcs},Ptr{Void}),pointer_from_objref(outline),pointer_from_objref(outline_funcs),user)
 end
-=#
  
 struct Library
     ref::Ref{FT_Library}
